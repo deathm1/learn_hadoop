@@ -1,68 +1,81 @@
 # Hadoop Installation Guide
 
-Reference: [Link](https://kontext.tech/article/829/install-hadoop-331-on-windows-10-step-by-step-guide)
+- For Windows: [Link](https://kontext.tech/article/829/install-hadoop-331-on-windows-10-step-by-step-guide)
 
-# System Requirements
+- For Linux: [Link](https://medium.com/@connectmeinarjun/step-by-step-guide-to-setting-up-hadoop-on-ubuntu-installation-and-configuration-walkthrough-60e493e9370d)
+
+# Compatible Systems
 
 - Windows 10
+- Linux Mint
 
 # Basic Commands
 
 ## Listing Root Directory
 
-`hadoop fs -ls /`
+| Windows           | Linux            |
+| ----------------- | ---------------- |
+| `hadoop fs -ls /` | `hdfs dfs -ls /` |
 
 ## Listing Default to Home Directory
 
-`hadoop fs -ls`
+| Windows         | Linux           |
+| --------------- | --------------- |
+| `hadoop fs -ls` | `hdfs dfs -ls ` |
 
 ## Create Directory in HDFS
 
 The name of the directory is 'hadoop-test1'
 
-`hadoop fs -mkdir /hadoop-test1`
+| Windows                          | Linux                           |
+| -------------------------------- | ------------------------------- |
+| `hadoop fs -mkdir /hadoop-test1` | `hdfs dfs -mkdir /hadoop-test1` |
 
 ## Copy from Local FS to Hadoop
 
-| Path Type    | Path                                       |
-| ------------ | ------------------------------------------ |
-| Source       | E:\source_dataset\dwp-payments-april10.csv |
-| Destincation | /hadoop-test1                              |
-
-`hadoop fs -copyFromLocal E:\source_dataset\dwp-payments-april10.csv /hadoop-test1`
+| Windows                                                                             | Linux                                                                      |
+| ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `hadoop fs -copyFromLocal E:\source_dataset\dwp-payments-april10.csv /hadoop-test1` | `hadoop fs -copyFromLocal raw_data/dwp-payments-april10.csv /hadoop-test1` |
 
 ## Copy from HDFS to Local
 
-| Path Type    | Path                                   |
-| ------------ | -------------------------------------- |
-| Source       | /hadoop-test1/dwp-payments-april10.csv |
-| Destincation | E:\output_dataset\                     |
-
-`hadoop fs -copyToLocal /hadoop-test1/dwp-payments-april10.csv E:\output_dataset\`
+| Windows                                                                            | Linux                                                                          |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `hadoop fs -copyToLocal /hadoop-test1/dwp-payments-april10.csv E:\output_dataset\` | `hdfs dfs -copyToLocal /hadoop-test1/dwp-payments-april10.csv output_dataset/` |
 
 ## Copy a file from one Location to another within HDFS
 
 - Create a directory
 
-`hadoop fs -mkdir /hadoop-test2`
+| Windows                          | Linux                           |
+| -------------------------------- | ------------------------------- |
+| `hadoop fs -mkdir /hadoop-test2` | `hdfs dfs -mkdir /hadoop-test2` |
 
 - Copy File from `/hadoop-test1` to `/hadoop-test2`
 
-`hadoop fs -cp /hadoop-test1/dwp-payments-april10.csv /hadoop-test2`
+| Windows                                                              | Linux                                                               |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `hadoop fs -cp /hadoop-test1/dwp-payments-april10.csv /hadoop-test2` | `hdfs dfs -cp /hadoop-test1/dwp-payments-april10.csv /hadoop-test2` |
 
 ## Move a file from One Location to Another within HDFS
 
 - Create a directory
 
-`hadoop fs -mkdir /hadoop-test3`
+| Windows                          | Linux                           |
+| -------------------------------- | ------------------------------- |
+| `hadoop fs -mkdir /hadoop-test3` | `hdfs dfs -mkdir /hadoop-test3` |
 
 - Move File from `/hadoop-test2/dwp-payments-april10.csv` to `/hadoop-test3`
 
-`hadoop fs -mv /hadoop-test2/dwp-payments-april10.csv /hadoop-test3`
+| Windows                                                              | Linux                                                               |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `hadoop fs -mv /hadoop-test2/dwp-payments-april10.csv /hadoop-test3` | `hdfs dfs -mv /hadoop-test2/dwp-payments-april10.csv /hadoop-test3` |
 
 ## Check Replication
 
-`hadoop fs -ls /hadoop-test3`
+| Windows                       | Linux                        |
+| ----------------------------- | ---------------------------- |
+| `hadoop fs -ls /hadoop-test3` | `hdfs dfs -ls /hadoop-test3` |
 
 - output: `-rw-r--r--   1 k0shu supergroup    3279110 2024-05-19 13:21 /hadoop-test3/dwp-payments-april10.csv`
 
@@ -70,7 +83,9 @@ _'1' means the file is replicated once._
 
 ## Change Replication Factor
 
-`hadoop fs -Ddfs.replication=2 -cp /hadoop-test2/dwp-payments-april10.csv /hadoop-test2/test_with_rep2.csv`
+| Windows                                                                                                     | Linux                                                                                                      |
+| ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `hadoop fs -Ddfs.replication=2 -cp /hadoop-test2/dwp-payments-april10.csv /hadoop-test2/test_with_rep2.csv` | `hdfs dfs -Ddfs.replication=2 -cp /hadoop-test3/dwp-payments-april10.csv /hadoop-test2/test_with_rep2.csv` |
 
 - output: `-rw-r--r--   2 k0shu supergroup    3279110 2024-05-19 14:48 /hadoop-test2/test_with_rep2.csv`
 
@@ -80,4 +95,6 @@ _Replication factor changed from default '1' to '2' means the file is replicated
 
 The user who is logged in as drives the permissions by default, atleast in linux.
 
-`hadoop fs -chmod 777 /hadoop-test2/test_with_rep2.csv`
+| Windows                                                 | Linux                                                  |
+| ------------------------------------------------------- | ------------------------------------------------------ |
+| `hadoop fs -chmod 777 /hadoop-test2/test_with_rep2.csv` | `hdfs dfs -chmod 777 /hadoop-test2/test_with_rep2.csv` |
