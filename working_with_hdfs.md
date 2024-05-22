@@ -1,4 +1,4 @@
-# Hadoop Installation Guide
+v# Hadoop Installation Guide
 
 - For Windows: [Link](https://kontext.tech/article/829/install-hadoop-331-on-windows-10-step-by-step-guide)
 
@@ -11,6 +11,9 @@
 - Ubuntu
 
 # Basic Commands
+
+- Launch on Windows : `%HADOOP_HOME%\sbin\start-dfs.cmd` & `%HADOOP_HOME%\sbin\start-yarn.cmd`
+- Stop on Windows : `%HADOOP_HOME%\sbin\stop-dfs.cmd` & `%HADOOP_HOME%\sbin\stop-yarn.cmd`
 
 ### Listing Root Directory
 
@@ -91,4 +94,5 @@ _This command checks the file health and the replication status_
 - `hdfs dfs -rm -r /hadoop-test2` _Delete Directory_
 
 ### Notes
+
 - DFS: Distributed File System
